@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+
 
 @Component({
   selector: 'app-registro',
@@ -12,17 +13,37 @@ import { UtilsService } from 'src/app/services/utils.service';
 
 export class RegistroPage implements OnInit {
 
-
+  
   form = new FormGroup({
     uid: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern('[a-zA-Z ]*')]),
     rol: new FormControl(''),
-  });
+    confirmPass: new FormControl('', [Validators.required])
+  },{
+      validators : this.confirmarPass('password','confirmPass')
+    });
 
   firebaseSvc = inject(FirebaseService);
-  utilsSvc = inject(UtilsService)
+  utilsSvc = inject(UtilsService);
+
+
+    // Función de validación para confirmacion de password
+    confirmarPass(campo1: string, campo2: string): ValidatorFn {
+      return (formulario: FormGroup): ValidationErrors | null => {
+        const control1 = formulario.get(campo1);
+        const control2 = formulario.get(campo2);
+    
+        if (control1 && control2 && control1.value !== control2.value) {
+          // La validación falla, devolver un objeto con un error
+          return { coincidirCampos: true };
+        }
+    
+        // La validación pasa, devolver null
+        return null;
+      };
+    }
 
   ngOnInit() {
   }
@@ -48,9 +69,19 @@ export class RegistroPage implements OnInit {
           let rol = 'profesor';
           this.form.controls.rol.setValue(rol);
         }
-        else{
+        else if(this.isLike(res.user.email,'@estudiante.com')){
           let rol = 'estudiante';
           this.form.controls.rol.setValue(rol);
+        }
+        else{
+        this.utilsSvc.presentToast({
+          message: 'Correo invalido',
+          duration: 1500,
+          color: 'danger',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        })
+        this.utilsSvc.routerLink('auth/registro');
         }
 
         this.form.controls.uid.setValue(uid);
