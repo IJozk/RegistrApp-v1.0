@@ -2,14 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 
-
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-generar-qr',
+  templateUrl: './generar-qr.page.html',
+  styleUrls: ['./generar-qr.page.scss'],
 })
-export class HomePage implements OnInit {
+export class GenerarQrPage implements OnInit {
 
   utilsSvc = inject(UtilsService);
   nombre: string;
@@ -45,8 +43,6 @@ export class HomePage implements OnInit {
         })
         this.utilsSvc.routerLink('/auth');
       }
-
-      
 
   }
 

@@ -2,25 +2,23 @@ import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 
-
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-asistencia-alumno',
+  templateUrl: './asistencia-alumno.page.html',
+  styleUrls: ['./asistencia-alumno.page.scss'],
 })
-export class HomePage implements OnInit {
+export class AsistenciaAlumnoPage implements OnInit {
 
   utilsSvc = inject(UtilsService);
   nombre: string;
   email: string;
-
+  
   ngOnInit() {
 
     try{
       let user: User = JSON.parse(localStorage.getItem('user'));
 
-        if (user.rol=='profesor' && user) {
+        if (user.rol=='estudiante' && user) {
           this.nombre = user.nombre ;
           this.email = user.email;
         }
@@ -46,8 +44,5 @@ export class HomePage implements OnInit {
         this.utilsSvc.routerLink('/auth');
       }
 
-      
-
   }
-
 }

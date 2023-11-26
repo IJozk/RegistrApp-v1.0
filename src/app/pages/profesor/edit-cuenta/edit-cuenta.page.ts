@@ -2,18 +2,18 @@ import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 
-
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-edit-cuenta',
+  templateUrl: './edit-cuenta.page.html',
+  styleUrls: ['./edit-cuenta.page.scss'],
 })
-export class HomePage implements OnInit {
-
+export class EditCuentaPage implements OnInit {
+  
   utilsSvc = inject(UtilsService);
   nombre: string;
   email: string;
+
+  constructor() { }
 
   ngOnInit() {
 
@@ -45,8 +45,6 @@ export class HomePage implements OnInit {
         })
         this.utilsSvc.routerLink('/auth');
       }
-
-      
 
   }
 

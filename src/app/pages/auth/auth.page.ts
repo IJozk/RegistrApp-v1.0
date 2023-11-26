@@ -20,6 +20,7 @@ export class AuthPage implements OnInit {
   utilsSvc = inject(UtilsService);
 
   ngOnInit() {
+    localStorage.clear();
   }
 
   async submit(){
