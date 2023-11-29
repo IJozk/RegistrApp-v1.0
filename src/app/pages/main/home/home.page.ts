@@ -23,6 +23,9 @@ throw new Error('Method not implemented.');
   prox_clases: any;
 
     async ngOnInit() {
+
+      
+
       try {
         let user: User = JSON.parse(localStorage.getItem('user'));
     
