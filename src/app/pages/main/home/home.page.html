@@ -17,10 +17,41 @@
     </ion-card-content>
   </ion-card>
 
-
-
-
   <app-custom-btn routerLink="/asistencia-profesor" nameBtn="calendar-outline" label="Ver asistencia de alumnos"></app-custom-btn>
-  <app-custom-btn routerLink="/generar-qr" nameBtn="qr-code-outline" label="Generar QR"></app-custom-btn>
+
+  <h2>Clase en curso:</h2>
+
+  <ion-list>
+
+    <ion-card *ngFor="let clase of clases">
+      <ion-card-header>
+        <h3>Seccion: {{ clase.id_seccion }}</h3> 
+        <p > {{ clase.hora_ini | date: 'dd/MM/yyyy HH:mm' }} </p>
+      </ion-card-header>
+        <ion-tab-button routerLink="/generar-qr">
+          <ion-icon name="qr-code-outline"></ion-icon>
+          <ion-label>Generar QR</ion-label>
+        </ion-tab-button>
+    </ion-card>
+
+  </ion-list>
+  
+  <h2>Proximas clases de hoy:</h2>
+
+  <ion-list>
+
+    <ion-card *ngFor="let clase2 of prox_clases">
+      <ion-card-header>
+        <h3>Seccion: {{ clase2.id_seccion }}</h3> 
+        <p > {{ clase2.hora_ini | date: 'dd/MM/yyyy HH:mm' }} </p>
+      </ion-card-header>
+        <ion-tab-button routerLink="/generar-qr">
+          <ion-icon name="qr-code-outline"></ion-icon>
+          <ion-label>Generar QR</ion-label>
+        </ion-tab-button>
+    </ion-card>
+
+  </ion-list>
+
 
 </ion-content>

@@ -1,0 +1,14 @@
+<app-header backButton="/main/home" title="Asistencia de alumnos"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+
+    <ion-card *ngFor="let estudiante of estudiantes">
+      <ion-card-header>
+        {{ estudiante.correo_est }}
+      </ion-card-header>
+      
+    </ion-card>
+
+  </ion-list>
+</ion-content>

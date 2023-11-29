@@ -46,6 +46,18 @@ const routes: Routes = [
     path: 'edit-cuenta',
     loadChildren: () => import('./pages/profesor/edit-cuenta/edit-cuenta.module').then( m => m.EditCuentaPageModule)
   },
+  {
+    path: 'edit-estudiante',
+    loadChildren: () => import('./pages/alumno/edit-estudiante/edit-estudiante.module').then( m => m.EditEstudiantePageModule)
+  },
+  {
+    path: 'ver-alumnos',
+    loadChildren: () => import('./pages/profesor/ver-alumnos/ver-alumnos.module').then( m => m.VerAlumnosPageModule)
+  },
+  {
+    path: 'scan-qr',
+    loadChildren: () => import('./pages/alumno/scan-qr/scan-qr.module').then( m => m.ScanQrPageModule)
+  },
 
 ];
 

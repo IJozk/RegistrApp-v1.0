@@ -68,10 +68,14 @@ export class RegistroPage implements OnInit {
         if (this.isLike(res.user.email,'@profesor.com')){
           let rol = 'profesor';
           this.form.controls.rol.setValue(rol);
+          this.form.controls.uid.setValue(uid);
+          this.setUserInfo(uid);
         }
         else if(this.isLike(res.user.email,'@estudiante.com')){
           let rol = 'estudiante';
           this.form.controls.rol.setValue(rol);
+          this.form.controls.uid.setValue(uid);
+          this.setUserInfo(uid);
         }
         else{
         this.utilsSvc.presentToast({
@@ -83,10 +87,6 @@ export class RegistroPage implements OnInit {
         })
         this.utilsSvc.routerLink('auth/registro');
         }
-
-        this.form.controls.uid.setValue(uid);
-
-        this.setUserInfo(uid);
         
 
       }).catch(error => {
