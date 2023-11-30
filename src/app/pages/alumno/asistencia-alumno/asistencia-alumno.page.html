@@ -7,19 +7,36 @@
 
   <ion-list>
 
-    <ion-card *ngFor="let inscripcion of secciones">
+    <ion-card *ngFor="let sec of secciones2">
       <ion-card-header>
-        
       </ion-card-header>
       <ion-card-content>
-        <h3>Seccion: {{ inscripcion.id_seccion }}</h3> 
+        <h3>Seccion: {{ sec.id_seccion }}</h3> 
         <p>Asistencia: 50%</p>
-      </ion-card-content>
+        <ion-button (click)="verAsist(secciones2.indexOf( sec ), sec.id_seccion)" color="none">
+          <ion-label color="primary">Ver asistencias</ion-label>
+          <ion-icon name="caret-down-outline" color="primary"></ion-icon>
+        </ion-button>
         
+      
+        <ion-list id="{{secciones2.indexOf( sec )}}"  class="ion-hide">
+          
+          <ion-list *ngFor="let asis of clases2">
+            <p>{{ asis.id_clase }}</p> 
+            <ion-list *ngFor="let asis2 of asist">
+              <ion-list *ngIf="asis2.id_clase==asis.id_clase "><p>asistido</p></ion-list>
+            </ion-list>
+          </ion-list>
+          
+        </ion-list>
+          
+      </ion-card-content>   
     </ion-card>
+
 
   </ion-list>
   
+
 
 
   
