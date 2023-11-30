@@ -2,28 +2,16 @@
 
 <ion-content [fullscreen]="true">
   
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label><h2>-- NOMBRE DEL RAMO --</h2>
-            <h3>-- ASIST --</h3>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label><h2>-- NOMBRE DEL RAMO --</h2>
-            <h3>-- ASIST --</h3>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+    <ion-card *ngFor="let inscripcion of inscripciones">
+      <ion-card-header>
+        <h3>Seccion: {{ inscripcion.id_seccion }}</h3> 
+        <p>Asistencia: 50%</p>
+      </ion-card-header>
+    </ion-card>
+
+  </ion-list>
+  
 
 </ion-content>

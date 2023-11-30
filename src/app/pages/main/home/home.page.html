@@ -45,18 +45,9 @@
         <h3>Seccion: {{ clase2.id_seccion }}</h3> 
         <p > {{ clase2.hora_ini | date: 'dd/MM/yyyy HH:mm' }} </p>
       </ion-card-header>
-        <ion-tab-button routerLink="/generar-qr">
-          <ion-icon name="qr-code-outline"></ion-icon>
-          <ion-label>Generar QR</ion-label>
-        </ion-tab-button>
     </ion-card>
 
   </ion-list>
-
-  <ion-button (click)="refreshPage()">
-    <ion-icon name="refresh-circle-outline"></ion-icon>
-    <ion-label>Refresh</ion-label>
-  </ion-button>
 
 
 </ion-content>

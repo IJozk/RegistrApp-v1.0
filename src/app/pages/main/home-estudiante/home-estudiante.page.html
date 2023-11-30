@@ -17,34 +17,32 @@
     </ion-card-content>
   </ion-card>
 
-  <h2 class="label-home">Clase en curso</h2>
+  <h2>Clase en curso:</h2>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label><h2>-- NOMBRE DEL RAMO --</h2>
-            <h3>-- ASIST --</h3>
-          </ion-label>
-        </ion-item>
-        <ion-button color="success" routerLink="/scan-qr">Registrar mi asistencia</ion-button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
 
-  <h2 class="label-home">Próxima clase</h2>
+    <ion-card *ngFor="let clase of clases">
+      <ion-card-header>
+        <h3>Seccion: {{ clase.id_seccion }}</h3> 
+        <p > {{ clase.hora_ini | date: 'dd/MM/yyyy HH:mm' }} </p>
+      </ion-card-header>
+      <ion-button color="success" routerLink="/alumno/scan-qr">Registrar mi asistencia</ion-button>
+    </ion-card>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label><h2>-- NOMBRE DEL RAMO --</h2>
-            <h3>-- ASIST --</h3>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  </ion-list>
+  
+  <h2>Proximas clases de hoy:</h2>
+
+  <ion-list>
+
+    <ion-card *ngFor="let clase2 of prox_clases">
+      <ion-card-header>
+        <h3>Seccion: {{ clase2.id_seccion }}</h3> 
+        <p > {{ clase2.hora_ini | date: 'dd/MM/yyyy HH:mm' }} </p>
+      </ion-card-header>
+    </ion-card>
+
+  </ion-list>
 
   <app-custom-btn routerLink="/asistencia-alumno" nameBtn="calendar-outline" label="Ver mi asistencias"></app-custom-btn>
 

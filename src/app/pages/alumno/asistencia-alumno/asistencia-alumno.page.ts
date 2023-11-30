@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-asistencia-alumno',
@@ -10,10 +11,13 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class AsistenciaAlumnoPage implements OnInit {
 
   utilsSvc = inject(UtilsService);
+  firebaseSvc = inject(FirebaseService);
   nombre: string;
   email: string;
+  inscripciones: any[];
+  secciones: any[];
   
-  ngOnInit() {
+  async ngOnInit() {
 
     try{
       let user: User = JSON.parse(localStorage.getItem('user'));
@@ -21,8 +25,31 @@ export class AsistenciaAlumnoPage implements OnInit {
         if (user.rol=='estudiante' && user) {
           this.nombre = user.nombre ;
           this.email = user.email;
-        }
-        else{
+
+          this.getInscripcionesInfo('inscripcion', this.email);
+
+          const inscripciones = localStorage.getItem('inscripciones');
+
+          if (inscripciones) {
+            const c_secciones = JSON.parse(inscripciones);
+
+            c_secciones.map(async (objetoActual) => {
+
+              const secciones = await this.firebaseSvc.obtenerDocumentos('secciones');
+              localStorage.setItem('secciones', JSON.stringify(secciones));
+      
+              // Filtrar y mapear las clases actuales
+              this.secciones = secciones
+                .filter(inscripcion => {
+                  console.log('todo bien');
+                  return inscripcion['id_seccion'] == objetoActual['id_seccion'];
+                });
+                
+            });
+          }else{
+            console.log('algo pasa');
+          };
+        }else{
           this.utilsSvc.presentToast({
             message: `Acceso denegado`,
             duration: 1500,
@@ -45,4 +72,63 @@ export class AsistenciaAlumnoPage implements OnInit {
       }
 
   }
+
+  async getInscripcionesInfo(colection: string, correo_est: string) {
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    const opcionesConsulta = {
+      campo: "correo_est",
+      operador: "==",
+      valor: correo_est,
+    };
+
+
+    this.firebaseSvc.obtenerDocsWhere(colection, opcionesConsulta).then((datos) => {
+
+      localStorage.setItem(colection, JSON.stringify(datos));
+
+    }).catch(error => {
+      console.log(error)
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'danger',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      })
+    }).finally(() => {
+      loading.dismiss();
+    })
+  }
+
+  async getSeccionesInfo(colection: string) {
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+
+    this.firebaseSvc.obtenerDocumentos(colection).then((datos) => {
+
+      localStorage.setItem(colection, JSON.stringify(datos));
+
+    }).catch(error => {
+      console.log(error)
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'danger',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      })
+    }).finally(() => {
+      loading.dismiss();
+    })
+  }
+
+
+
 }
