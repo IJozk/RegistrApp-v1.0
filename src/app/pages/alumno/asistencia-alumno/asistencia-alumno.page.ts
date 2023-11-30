@@ -14,8 +14,8 @@ export class AsistenciaAlumnoPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   nombre: string;
   email: string;
-  inscripciones: any[];
-  secciones: any[];
+  inscripciones: any;
+  secciones: any;
   
   async ngOnInit() {
 
@@ -27,27 +27,29 @@ export class AsistenciaAlumnoPage implements OnInit {
           this.email = user.email;
 
           this.getInscripcionesInfo('inscripcion', this.email);
-
-          const inscripciones = localStorage.getItem('inscripciones');
-
+          const inscripciones = localStorage.getItem('inscripcion');
+          
           if (inscripciones) {
             const c_secciones = JSON.parse(inscripciones);
 
-            c_secciones.map(async (objetoActual) => {
+            const promesas = c_secciones.map(async (objetoActual) => {
 
               const secciones = await this.firebaseSvc.obtenerDocumentos('secciones');
               localStorage.setItem('secciones', JSON.stringify(secciones));
       
               // Filtrar y mapear las clases actuales
-              this.secciones = secciones
-                .filter(inscripcion => {
-                  console.log('todo bien');
-                  return inscripcion['id_seccion'] == objetoActual['id_seccion'];
-                });
-                
+              this.secciones = c_secciones
+                .filter(seccion => {console.log('aca estoy');
+                  console.log('ide de id_seccion: '+seccion['id_seccion']+'      id_inscripcion: '+objetoActual['id_seccion'])
+                  return seccion['id_seccion'] == objetoActual['id_seccion'];
+                }).map(seccion  => {
+                  
+                  return Object.assign({} ,seccion , {});
+                })
             });
+            await Promise.all(promesas);
           }else{
-            console.log('algo pasa');
+            null;
           };
         }else{
           this.utilsSvc.presentToast({

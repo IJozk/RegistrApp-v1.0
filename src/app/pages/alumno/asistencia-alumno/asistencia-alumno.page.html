@@ -2,16 +2,25 @@
 
 <ion-content [fullscreen]="true">
   
+
+  <h1> Asignaturas Inscritas</h1>
+
   <ion-list>
 
-    <ion-card *ngFor="let inscripcion of inscripciones">
+    <ion-card *ngFor="let inscripcion of secciones">
       <ion-card-header>
+        
+      </ion-card-header>
+      <ion-card-content>
         <h3>Seccion: {{ inscripcion.id_seccion }}</h3> 
         <p>Asistencia: 50%</p>
-      </ion-card-header>
+      </ion-card-content>
+        
     </ion-card>
 
   </ion-list>
   
 
+
+  
 </ion-content>
